@@ -13,7 +13,4 @@ table tr td {
     border: 1px solid black;
     min-width: 50px;
 }
-#root {
-    background: black;
-    margin: 0 auto;
-}
+
