@@ -1,0 +1,19 @@
+table {
+    border: 1px solid black;
+    color: black;
+    max-width: 400px;
+    min-height: 100px;
+
+}
+table tr {
+    border: 1px solid black;
+    min-width: 100px;
+}
+table tr td {
+    border: 1px solid black;
+    min-width: 50px;
+}
+#root {
+    background: black;
+    margin: 0 auto;
+}
