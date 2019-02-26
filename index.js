@@ -1,51 +1,56 @@
 
 
-function appendRow() {
-    let tbl = document.getElementById('my-table'),
-        row = tbl.insertRow(tbl.rows.length);   
-        row.className = 'row';
-    for (let i = 0; i < tbl.rows[0].cells.length; i++) {
-        createCell(row.insertCell(i), i, 'cell');
-    }
-}
-
+// ф-я создания дива где после в него добавляется text (контент) и атрибут class
 function createCell(cell, text, style) {
     let div = document.createElement('div'), 
         txt = document.createTextNode(text); 
     div.appendChild(txt);                   
     div.setAttribute('class', style);      
-    cell.appendChild(div);                   
+    cell.appendChild(div); // добавление див в ячейку таблицы                 
 }
 
+// ф-я добавления строки в таблицу
+function appendRow() {
+    let tbl = document.getElementById('my-table'), // получение таблицу по id 
+        row = tbl.insertRow(tbl.rows.length);   // добавление строки в таблицу 
+        row.className = 'row';
+    for (let i = 0; i < tbl.rows[0].cells.length; i++) { // перебор количества столбцов в первой строке
+        createCell(row.insertCell(i), i, 'cell'); // создание и добавление строки с таким же количеством столбцов как в первой строке
+    }
+}
+
+// ф-я добавления столбца в строку
 function appendColumn() {
     let tbl = document.getElementById('my-table');
-    for (let i = 0; i < tbl.rows.length; i++) {
-        createCell(tbl.rows[i].insertCell(tbl.rows[i].cells.length), i, 'cell');
+    for (let i = 0; i < tbl.rows.length; i++) { // перебираются все строки в таблице
+        createCell(tbl.rows[i].insertCell(tbl.rows[i].cells.length), i, 'cell'); // создание и добавление в каждую строку td с его индексом и классом cell
     }
 }
-
+// ф-я удаления строк
 function deleteRows() {
     let tbl = document.getElementById('my-table'), 
-        lastRow = tbl.rows.length - 1;             
-    for (let i = lastRow; i > 0; i--) {
-        tbl.deleteRow(i);
+        lastRow = tbl.rows.length - 1;  // получаю индекс последней строки         
+    for (let i = lastRow; i > 0; i--) { // пеиребираю c конца все строки
+        tbl.deleteRow(i); // удаляю все строки
     }
 }
-
+// ф-я удаления столбцов 
 function deleteColumns() {
     let tbl = document.getElementById('my-table'), 
-        lastCol = tbl.rows[0].cells.length - 1;    
-    for (let i = 0; i < tbl.rows.length; i++) {
-        for (let j = lastCol; j > 0; j--) {
-            tbl.rows[i].deleteCell(j);
+        lastCol = tbl.rows[0].cells.length - 1; // получаю индекс последнего столбца
+    for (let i = 0; i < tbl.rows.length; i++) { // перебираю все строки в таблице 
+        for (let j = lastCol; j > 0; j--) { // перебираю с конца все столбцы в строке
+            tbl.rows[i].deleteCell(j); // удаляю у всех строк стобцы
         }
     }
 }
 
 
 let table = document.getElementById('my-table');
-
-table.addEventListener('dblclick', ({ target }) => {
+/** при двойном клике на элемент если у него есть класс cell сделать инпат
+ * после заполнения при нажатии на энтер данные сохранятся в ячейке
+ */
+table.addEventListener('dblclick', ({ target }) => { 
     if (target.classList.contains('cell')) {
         let input = document.createElement('input');
         target.innerText = '';
@@ -57,12 +62,14 @@ table.addEventListener('dblclick', ({ target }) => {
                target.innerText = input.value; 
             }
         });
-    }
+    } 
 });
 
-
+/**создание, добавление кнопок в body и добавления им атрибутов 
+ * добавление им события 
+*/
 const addRowBtn = document.createElement('input');
-addRowBtn.setAttribute('value', 'Добавить ряд');
+addRowBtn.setAttribute('value', 'Добавить строку');
 addRowBtn.setAttribute('type', 'button');
 addRowBtn.addEventListener('click', () => {
     appendRow();
@@ -70,7 +77,7 @@ addRowBtn.addEventListener('click', () => {
 document.body.appendChild(addRowBtn);
 
 const AddcolumnBtn = document.createElement('input');
-AddcolumnBtn.setAttribute('value', 'Добавить колонку');
+AddcolumnBtn.setAttribute('value', 'Добавить столбец');
 AddcolumnBtn.setAttribute('type', 'button');
 AddcolumnBtn.addEventListener('click', () => {
     appendColumn();
@@ -78,7 +85,7 @@ AddcolumnBtn.addEventListener('click', () => {
 document.body.appendChild(AddcolumnBtn);
 
 const deleteRowsBtn = document.createElement('input');
-deleteRowsBtn.setAttribute('value', 'Удалить ряды');
+deleteRowsBtn.setAttribute('value', 'Удалить строки');
 deleteRowsBtn.setAttribute('type', 'button');
 deleteRowsBtn.addEventListener('click', () => {
     deleteRows();
